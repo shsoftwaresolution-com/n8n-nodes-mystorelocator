@@ -1,0 +1,59 @@
+{
+	"name": "n8n-nodes-mystorelocator",
+	"version": "0.1.0",
+	"description": "n8n nodes for My Store Locator: manage store locations, read maps and enquiries, trigger workflows on new locations and leads.",
+	"license": "MIT",
+	"homepage": "https://my-store-locator.com/?utm_source=n8n&utm_medium=integration&utm_campaign=n8n-plugin",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"store locator",
+		"store finder",
+		"my store locator",
+		"locations",
+		"maps"
+	],
+	"author": {
+		"name": "SH Software Solution",
+		"email": "info@my-store-locator.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/shsoftwaresolution-com/n8n-nodes-mystorelocator.git"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"test": "npm run build && node --test test/*.test.js",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/MyStoreLocatorApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/MyStoreLocator/MyStoreLocator.node.js",
+			"dist/nodes/MyStoreLocatorTrigger/MyStoreLocatorTrigger.node.js",
+			"dist/nodes/MyStoreLocatorWebhookTrigger/MyStoreLocatorWebhookTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "0.53.4",
+		"eslint": "9.39.4",
+		"prettier": "3.8.3",
+		"release-it": "20.2.0",
+		"typescript": "5.9.3"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}
