@@ -49,7 +49,7 @@ export class MyStoreLocatorWebhookTrigger implements INodeType {
 		properties: [
 			{
 				displayName:
-					'The API key needs the scope webhooks:write plus the read scope of the events (locations:read, maps:read, leads:read). Webhooks are part of the Business plan.',
+					'The API key needs the scope webhooks:write plus the read scope of the events (locations:read, maps:read, leads:read). Webhooks are included from the Starter plan (Starter 10, Pro 25).',
 				name: 'notice',
 				type: 'notice',
 				default: '',
