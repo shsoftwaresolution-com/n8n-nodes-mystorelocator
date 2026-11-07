@@ -4,7 +4,7 @@ n8n community nodes for [My Store Locator](https://my-store-locator.com/?utm_sou
 store finder maps for websites, hosted in Germany. Manage locations, read maps and enquiries, and start workflows when locations or
 enquiries are added or changed.
 
-[Installation](#installation) · [Credentials](#credentials) · [Nodes and operations](#nodes-and-operations) · [Compatibility](#compatibility) · [Development](#development)
+[Installation](#installation) · [Credentials](#credentials) · [Nodes and operations](#nodes-and-operations) · [Usage](#usage-and-example-workflows) · [Compatibility](#compatibility) · [Development](#development)
 
 ## Installation
 
@@ -45,9 +45,29 @@ Every request is checked against `X-MSL-Signature` (`t=<unix>,sha256=HMAC-SHA256
 invalid ones get 401. Events: `location.created`, `location.updated`, `location.deleted`, `lead.created`, `map.published`, `import.finished`.
 The key needs `webhooks:write` plus the read scope of the events. Webhooks are included from Starter as well (Starter 10, Pro 25).
 
+## Usage and example workflows
+
+1. Create a **My Store Locator API** credential with your API key (see [Credentials](#credentials)) and click **Test**.
+2. Add the **My Store Locator** node, pick a resource and an operation, and select the credential.
+
+**Sync stores from a spreadsheet** – Google Sheets (or any source) → **My Store Locator: Location → Get Many** with the store's name
+or ZIP as search → **If** found → **Location → Update** with the changed fields, otherwise **Location → Create** (name + city;
+the address is geocoded). Rows that should disappear → **Location → Archive**.
+
+**Send new enquiries to your team** – **My Store Locator Webhook Trigger** (event `lead.created`) → Slack / e-mail / CRM node.
+Without a public n8n URL use the **My Store Locator Trigger** (polling, event *New Lead*) instead.
+
+**Keep another system up to date** – **My Store Locator Trigger** (event *Updated Location*) → HTTP Request or database node that
+writes the changed store into your ERP, shop or CRM.
+
+**Report your maps** – **Schedule Trigger** → **My Store Locator: Map → Get Many** → spreadsheet with the map name, embed token,
+published state and number of locations.
+
+As an **AI agent tool** the node lets an agent look up stores ("Which store is open in Hamburg?") with *Location → Get Many*.
+
 ## Compatibility
 
-Built with `@n8n/node-cli` 0.53 and `n8n-workflow` 2.x (n8n 1.x and 2.x, nodes API version 1). No runtime dependencies.
+Built with `@n8n/node-cli` 0.53 and `n8n-workflow` 2.x (n8n 1.x and 2.x, nodes API version 1). Tested with n8n 2.40.7. No runtime dependencies.
 
 ## Privacy
 

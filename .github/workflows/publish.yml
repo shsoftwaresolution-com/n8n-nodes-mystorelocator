@@ -1,5 +1,5 @@
-# Template for the PUBLIC repo shsoftwaresolution-com/n8n-nodes-mystorelocator (copy to .github/workflows/publish.yml there).
-# Copied from n8n-io/n8n-nodes-starter. It is NOT active in this monorepo.
+# Publishes n8n-nodes-mystorelocator with npm Trusted Publishing (OIDC) and provenance. Based on n8n-io/n8n-nodes-starter.
+# Trusted publisher on npmjs.com: GitHub Actions, shsoftwaresolution-com/n8n-nodes-mystorelocator, workflow publish.yml (07.11.2026).
 # Publishes this n8n community node package to npm on every version tag push.
 #
 # Starting May 1 2026, n8n requires all community nodes to be published via
@@ -89,15 +89,12 @@ jobs:
         run: npm ci
 
       - name: Release
-        # Publishes to npm with a provenance attestation (requires id-token: write above).
-        # Lint and build run automatically as part of the release process.
-        #
-        # Option A (OIDC): leave NPM_TOKEN unset — the token step is skipped and
-        #   npm uses the OIDC exchange instead.
-        # Option B (token): set NPM_TOKEN in repo secrets — it is written to
-        #   .npmrc here before publishing.
+        # npm Trusted Publishing (OIDC): npmjs.com trusts this repository + publish.yml. npm >= 11.5.1 (Node 24) uses the
+        # OIDC token first. NPM_TOKEN is only a fallback until the trusted publisher is confirmed (the secret expires 14.11.2026);
+        # after the first OIDC publish delete the NPM_TOKEN secret and these two token lines.
         run: |
-          [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          npm --version
+          if [ -n "$NPM_TOKEN" ]; then npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"; fi
           npm run release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

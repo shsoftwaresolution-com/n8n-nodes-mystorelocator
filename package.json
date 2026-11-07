@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-mystorelocator",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "n8n nodes for My Store Locator: manage store locations, read maps and enquiries, trigger workflows on new locations and leads.",
 	"license": "MIT",
 	"homepage": "https://my-store-locator.com/?utm_source=n8n&utm_medium=integration&utm_campaign=n8n-plugin",
